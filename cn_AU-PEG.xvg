@@ -1,0 +1,44 @@
+# This file was created Thu Sep  6 16:47:01 2018
+# Created by:
+# GROMACS:      gmx rdf, VERSION 5.0.7
+# Executable:   /usr/local/bin/gmx
+# Library dir:  /usr/local/share/gromacs/top
+# Command line:
+#   gmx rdf -f ../teg-pbs.trr -com -s analysis.tpr -cn cn_AU-PEG -o AU-PEG -n index.ndx -bin 0.2
+# gmx is part of G R O M A C S:
+#
+# Gromacs Runs One Microsecond At Cannonball Speeds
+#
+@    title "Cumulative Number RDF"
+@    xaxis  label "r"
+@    yaxis  label "number"
+@TYPE xy
+@ subtitle "TEG-PEG"
+         0          0
+       0.2          0
+       0.4          0
+       0.6          0
+       0.8   0.393258
+         1    12.5918
+       1.2    21.3046
+       1.4    35.7291
+       1.6    67.4482
+       1.8    134.989
+         2     254.86
+       2.2    409.541
+       2.4    565.468
+       2.6    711.012
+       2.8    853.001
+         3    979.886
+       3.2    1083.76
+       3.4    1150.84
+       3.6    1176.84
+       3.8       1178
+         4       1178
+       4.2       1178
+       4.4       1178
+       4.6       1178
+       4.8       1178
+         5       1178
+       5.2       1178
+       5.4       1178

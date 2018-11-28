@@ -1,0 +1,17 @@
+;sample ここにコメント
+;teg-pbs
+;RadialMassDensity
+[ input ]
+moi.xvg
+;
+[ output ]
+eccentricity.xvg
+;
+[ colname ]
+time Imin Imid Imaj
+;
+;[ particles ]
+;particle    num
+;Atom_H  18
+;Atom_C  9
+;Atom_O  4
