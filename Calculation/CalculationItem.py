@@ -20,11 +20,18 @@ class Volume():
     def calcSphereVolume(self, radius):
         Volume = 4 * np.pi * radius / 3
         return Volume
+    def calcCubeVolume(self, x, y, z):
+        Volume = x * y * z
+        return Volume
 
 class Density():
-    def calcDensity(self, volume, molecular_weight, num_atom):
-        dens = molecular_weight * num_atom / volume
+    def calcDensity(self, volume, molecular_weight, num_particles):
+        dens = molecular_weight * num_particles / volume
         return dens
+    def calcNumberDensity(self, volume, num_particles):
+        dens = num_particles / volume
+        return dens
+
 
 class Eccentricity():
     def calcEccentricity(self, min_inertia, mid_inertia, maj_inertia):

@@ -1,0 +1,20 @@
+;sample ここにコメント
+;
+;
+[ input ]
+2ms.gro
+;
+[ output ]
+hoge.gro
+;
+[ colname ]
+index_molecules particles index X Y Z VX VY VZ
+;
+;[ particles ]
+;particle    num
+;Atom_H  18
+;Atom_C  9
+;Atom_O  4
+[ division number ]
+3 2 2
+;split : x y z

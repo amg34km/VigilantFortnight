@@ -7,6 +7,7 @@ class Table(object):
         self.skip_line_number = skip_line_number
         self.comment_tag = comment_tag
         self.column_names = column_names
+        self.skip_footer = 0
 
 
     def makeTable(self):
@@ -14,6 +15,7 @@ class Table(object):
                              skiprows = self.skip_line_number,
                              skipinitialspace = True,
                              comment = self.comment_tag,
+                             skipfooter = self.skip_footer,
                              names = self.column_names)
         return self.table
 
