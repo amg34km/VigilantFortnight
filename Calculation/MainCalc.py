@@ -31,31 +31,40 @@ class CalcEccentricity(CItem.Eccentricity):
 
 class CalcNumberDensity(CItem.Volume, CItem.Density):
     def __init__(self, table, box_size, division_number):
+        index = []
+        DENSITY_PARAMETER = 1.3
         cell_size = box_size / division_number
         cell_volume = CItem.Volume.calcCubeVolume(self, cell_size[:,0], cell_size[:,1], cell_size[:,2])
         box_volume = CItem.Volume.calcCubeVolume(self, box_size[:,0], box_size[:,1], box_size[:,2])
-        print(box_size, division_number, cell_size)
-        print(cell_volume, box_volume)
         total_number_density = CItem.Density.calcNumberDensity(self, len(table), box_volume)
-        print(total_number_density)
-
         ### PBC
-        #print(table.loc[table.Y < 0, 'Y'])
-        table.loc[table.Y < 0,'Y'] = 0
-        #mask["Y"] = mask["Y"] + 5
+        table.loc[table.X < 0,'X'] = table.loc[table.X < 0,'X'] + box_size[:,0]
+        table.loc[table.X > float(box_size[:,0]),'X'] = table.loc[table.X > float(box_size[:,0]),'X'] - box_size[:,0]
+        table.loc[table.Y < 0,'Y'] = table.loc[table.Y < 0,'Y'] + box_size[:,1]
+        table.loc[table.Y > float(box_size[:,1]),'Y'] = table.loc[table.Y > float(box_size[:,1]),'Y'] - box_size[:,1]
+        table.loc[table.Z < 0,'Z'] = table.loc[table.Z < 0,'Z'] + box_size[:,2]
+        table.loc[table.Z > float(box_size[:,2]),'Z'] = table.loc[table.Z > float(box_size[:,2]),'Z'] - box_size[:,2]
         ### Count N in each Cells
         for x in range(division_number[0]):
             for y in range(division_number[1]):
                 for z in range(division_number[2]):
-                    #print(x,y,z)
-                    pass
-        ### Calc each Cells Density
+                    cell_table = table.loc[(table.X >= float(cell_size[:,0] * x)) &
+                                           (table.X < float(cell_size[:,0] * (x+1))) &
+                                           (table.Y >= float(cell_size[:,1] * y)) &
+                                           (table.Y < float(cell_size[:,1] * (y+1))) &
+                                           (table.Z >= float(cell_size[:,2] * z)) &
+                                           (table.Z < float(cell_size[:,2] * (z+1)))]
+                    ### Calc each Cells Density
+                    number_density = CItem.Density.calcNumberDensity(self, len(cell_table), cell_volume)
+                    ### Compare Cell Densities and Total Density
+                    if number_density > total_number_density * DENSITY_PARAMETER:
+                        index.extend(cell_table.id.values)
+        self.indexes = pd.Series(index).astype(np.int64)
 
-        ### Compare Cell Densities and Total Density
-
-        ### get index
 
 
+    def getIndex(self):
+        return self.indexes
 
 if __name__ == "__main__":
     atoms = ['Atom_H', 'Atom_C', 'Atom_O']

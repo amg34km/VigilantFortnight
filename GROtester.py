@@ -11,5 +11,5 @@ if __name__ == "__main__":
     Calc = Calc.CalcNumberDensity(N_table,
                                   source_table.tail(1).astype(float).dropna(how='all', axis=1).values,
                                   [int(x) for x in GRO.division_number])
-    #result_table = Calc.getCalculationResult()
-    #XVG.outputTable(result_table)
+    indexes = Calc.getIndex()
+    GRO.outputTable(indexes)
