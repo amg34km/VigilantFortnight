@@ -4,8 +4,10 @@
 [ input ]
 2ms.gro
 ;
-[ output ]
+[ output dat ]
 hoge.dat
+[ output gro ]
+hoge.gro
 ;
 [ colname ]
 id_molecules particles id X Y Z VX VY VZ
