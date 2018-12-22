@@ -39,7 +39,7 @@ class WriteGRO():
                 row[2] = int(row[2])
                 line = "{0[0]:>9s}{0[1]:>6s}{0[2]:5d}{0[3]:8.3f}{0[4]:8.3f}{0[5]:8.3f}{0[6]:8.4f}{0[7]:8.4f}{0[8]:8.4f}\n".format(row)
                 f.write(line)
-            box="{0[0]:10.5f}{0[1]:10.5f}{0[2]:10.5f}".format(box_size)
+            box="{0[0]:10.5f}{0[1]:10.5f}{0[2]:10.5f}\n".format(box_size)
             f.write(box)
 
 def getSectionName(lines, tab):
