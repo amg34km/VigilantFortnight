@@ -19,9 +19,6 @@ class Table(object):
                              names = self.column_names)
         return self.table
 
-    def outputTable(self, table, mode = 'w'):
-        table.to_csv(self.new_name, sep='\t', mode = mode,index = False, header = False)
-
     def addSentence(self,sentence,mode= 'w'):
         with open(self.new_name, mode=mode) as f:
             f.write(sentence)

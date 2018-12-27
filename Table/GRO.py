@@ -1,4 +1,5 @@
 import pandas as pd
+import linecache
 from . import TableIO
 
 class ReadGRO(TableIO.Table):
@@ -7,6 +8,19 @@ class ReadGRO(TableIO.Table):
         self.plot_tag = '@'
         self.skip_line_number = 2
         self.skip_footer = 0
+
+    def readBoxSize(self):
+        return self.table.tail(1).astype(float).dropna(how='all', axis=1).values
+
+    def readSYSandTime(self):
+        line = linecache.getline(self.fname,1).split()
+        if ':' in line:
+            system = line[line.index(':')+1]
+        else:
+            system = line[0]
+        if 't=' in line:
+            time = float(line[line.index('t=')+1])
+        return system, time
 
 class ReadInfoData(ReadGRO):
     def __init__(self,infofile_name = 'GROInfo.dat', section_tab = '['):
@@ -31,9 +45,12 @@ class ReadInfoData(ReadGRO):
                     self.division_number = getLines(lines_strip, section[0]).split()
 
 class WriteGRO():
+    def __init__(self,system_name,time=0):
+        self.system = system_name
+        self.time = time
     def format(self,table,new_name,box_size):
         with open(new_name, mode='w') as f:
-            f.write('ICE\n')
+            f.write('{} t= {:.5f}\n'.format(self.system,self.time))
             f.write('{:5d}\n'.format(len(table)))
             for row in table.values.tolist():
                 row[2] = int(row[2])

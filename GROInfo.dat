@@ -2,12 +2,12 @@
 ;
 ;
 [ input ]
-2ms.gro
+flame1736.gro
 ;
 [ output dat ]
-hoge.dat
+flame1736.dat
 [ output gro ]
-hoge.gro
+flame1736_HD.gro
 ;
 [ colname ]
 id_molecules particles id X Y Z VX VY VZ
