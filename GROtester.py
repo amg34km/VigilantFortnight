@@ -14,8 +14,8 @@ if __name__ == "__main__":
     Calc = Calc.CalcNumberDensity(N_table, box_size, [int(x) for x in GRO.division_number])
     high_density_table = Calc.getHighDensityTable()
 
-#    WGRO = gro.WriteGRO(system_name,time)
-#    WGRO.format(high_density_table, GRO.gro_name, box_size.flatten().tolist())
+    WGRO = gro.WriteGRO(system_name,time)
+    WGRO.format(high_density_table, GRO.gro_name, box_size.flatten().tolist(),'a')
 
 
     header = Calc.getSentence()

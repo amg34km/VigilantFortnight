@@ -48,8 +48,8 @@ class WriteGRO():
     def __init__(self,system_name,time=0):
         self.system = system_name
         self.time = time
-    def format(self,table,new_name,box_size):
-        with open(new_name, mode='w') as f:
+    def format(self,table,new_name,box_size,mode = 'w'):
+        with open(new_name, mode=mode) as f:
             f.write('{} t= {:.5f}\n'.format(self.system,self.time))
             f.write('{:5d}\n'.format(len(table)))
             for row in table.values.tolist():
