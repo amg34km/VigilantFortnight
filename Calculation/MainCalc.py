@@ -50,6 +50,7 @@ class CalcNumberDensity(CItem.Volume, CItem.Density):
         DS.addNumdata('N particle number',len(table))
         DS.addNumdata('box density',total_number_density)
         DS.addNumdata('LIMIT',LIMIT)
+        num = 0
 
         for i in range(np.prod(division_number)):
             cell_table = next(cell_box)
@@ -59,9 +60,11 @@ class CalcNumberDensity(CItem.Volume, CItem.Density):
                 index.extend(cell_table.id.values)
                 DS.addNumdata('particle number in cell',len(cell_table))
                 DS.addNumdata('cell density',number_density)
+                num += 1
             else:
                 DS.addNumdata('particle number in cell',len(cell_table))
                 DS.addNumdata('cell density',number_density)
+        DS.addNumdata('cell number',num)
         self.sentence = DS.rerturnSentence()
         index_int = [int(i) for i in index]
         print(index_int)
