@@ -39,6 +39,15 @@ class Eccentricity():
         eccentricity = 1 - (min_inertia/avg_inertia)
         return eccentricity
 
+class Distance():
+    def distance(self, x0, x1, box_size):
+        #PBCを考慮している
+        x0 = np.array(x0)
+        x1 = np.array(x1)
+        delta = np.abs(x0 - x1)
+        delta = np.where(delta > 0.5 * box_size, delta - box_size, delta)
+        return np.sqrt((delta ** 2).sum(axis=-1))
+
 
 if __name__ == "__main__":
     atoms = ['Atom_H', 'Atom_C', 'Atom_O']

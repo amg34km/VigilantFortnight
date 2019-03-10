@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+from scipy.spatial import distance
 from . import CalculationItem as CItem
 from . import UnitConverter as UConv
 from . import BoxEdit, DataWrite
@@ -31,17 +32,16 @@ class CalcNumberDensity(CItem.Volume, CItem.Density):
     def __init__(self, table, box_size, division_number):
         DENSITY_PARAMETER = 1.3
         LIMIT = 3.130152987
-        index = []
+        index, cell_centers, dists = [], [], []
         Box=BoxEdit.BOX(table)
-        DS = DataWrite.DataSentence()
         cell_size = box_size / division_number
         cell_box = Box.divisionBox(cell_size, division_number)
         cell_volume = CItem.Volume.calcCubeVolume(self, cell_size[:,0], cell_size[:,1], cell_size[:,2])
         box_volume = CItem.Volume.calcCubeVolume(self, box_size[:,0], box_size[:,1], box_size[:,2])
         total_number_density = CItem.Density.calcNumberDensity(self, box_volume, len(table))
         Box.PBC(box_size)
-        #self.sentence = "box size : " + ' '.join(map(str,box_size)) + "\ndivision number : " + ' '.join(map(str,division_number)) + "\nbox volume : " + str(box_volume) + "\nbox density : "
-        #self.sentence = self.sentence  + str(total_number_density) + "\ncell size : " + ' '.join(map(str,cell_size)) + "\ncell volume : " + str(cell_volume)
+
+        DS = DataWrite.DataSentence()
         DS.addListdata('box size',box_size)
         DS.addListdata('cell size',cell_size)
         DS.addListdata('division',division_number)
@@ -53,11 +53,12 @@ class CalcNumberDensity(CItem.Volume, CItem.Density):
         num = 0
 
         for i in range(np.prod(division_number)):
-            cell_table = next(cell_box)
+            cell_table, cell_center = next(cell_box)
             #print(cell_table)
             number_density = CItem.Density.calcNumberDensity(self, cell_volume, len(cell_table))
             if number_density >= LIMIT:
                 index.extend(cell_table.id.values)
+                cell_centers.append(cell_center)
                 DS.addNumdata('particle number in cell',len(cell_table))
                 DS.addNumdata('cell density',number_density)
                 num += 1
@@ -65,9 +66,17 @@ class CalcNumberDensity(CItem.Volume, CItem.Density):
                 DS.addNumdata('particle number in cell',len(cell_table))
                 DS.addNumdata('cell density',number_density)
         DS.addNumdata('cell number',num)
-        self.sentence = DS.rerturnSentence()
+
         index_int = [int(i) for i in index]
-        print(index_int)
+
+        #距離配列法
+        for i in range(len(cell_centers)):
+            for j in range(i+1, len(cell_centers)):
+                dist = CItem.Distance.distance(self, cell_centers[i], cell_centers[j], box_size)
+                dists.append(dist)
+        np.savetxt('dist.dat', dists, delimiter=' ')
+
+        self.sentence = DS.rerturnSentence()
         self.Hdensity_table = table[table.id.isin(index_int)]
 
     def getSentence(self):

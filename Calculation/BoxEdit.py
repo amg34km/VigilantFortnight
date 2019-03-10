@@ -23,7 +23,14 @@ class BOX():
                                                 (self.table.Y < float(cell_size[:,1] * (y+1))) &
                                                 (self.table.Z >= float(cell_size[:,2] * z)) &
                                                 (self.table.Z < float(cell_size[:,2] * (z+1)))]
-                    yield cell_table
+                    #print((float(cell_size[:,0] * x) + float(cell_size[:,0] * (x+1))) / 2)
+                    #print((float(cell_size[:,0] * y) + float(cell_size[:,0] * (y+1))) / 2)
+                    #print((float(cell_size[:,0] * z) + float(cell_size[:,0] * (z+1))) / 2)
+                    center = [(float(cell_size[:,0] * x) + float(cell_size[:,0] * (x+1))) / 2,
+                    (float(cell_size[:,0] * y) + float(cell_size[:,0] * (y+1))) / 2,
+                    (float(cell_size[:,0] * z) + float(cell_size[:,0] * (z+1))) / 2]
+                    #print(center)
+                    yield cell_table, center
 
 
 if __name__ == "__main__":

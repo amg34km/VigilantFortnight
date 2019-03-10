@@ -1,22 +1,11 @@
-;sample ここにコメント
-;
-;
+;CellDensity
 [ input ]
-flame1736.gro
-;
+frame71.gro
 [ output dat ]
-flame1736.dat
+101010calcdata71.dat
 [ output gro ]
-flame1736_HD.gro
-;
+101010HighDensity71.gro
 [ colname ]
 id_molecules particles id X Y Z VX VY VZ
-;
-;[ particles ]
-;particle    num
-;Atom_H  18
-;Atom_C  9
-;Atom_O  4
 [ division number ]
 5 5 5
-;split : x y z
