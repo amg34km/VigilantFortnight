@@ -23,6 +23,9 @@ class Table(object):
         with open(self.new_name, mode=mode) as f:
             f.write(sentence)
 
+    def outputTable(self,table):
+       table.to_csv(self.new_name, sep='\t', index = False, header = False)
+
 
 def countCommentLine(fname, comment_tags):
     skip_line_number = 0

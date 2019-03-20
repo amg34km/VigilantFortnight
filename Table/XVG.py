@@ -6,6 +6,7 @@ class ReadXVG(TableIO.Table):
         self.comment_tag = '#'
         self.plot_tag = '@'
         self.skip_line_number = 4
+        self.skip_footer = 0
 
 class ReadInfoData(ReadXVG):
     def __init__(self,infofile_name = 'SystemInfo.dat', section_tab = '['):
